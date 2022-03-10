@@ -36,3 +36,7 @@ Store and retrieve messages stored in a plain JSON file
 - To create a new module. p.s. It will add Module at the end of directory name automatically
 
   `nest generate module messages`
+
+- Generate a new controller through cli
+  - `nest generate controller messages/messages --flat`
+  - type of class to generate; Place the file in the messages folder/Call the class 'messages'; Don't create an extra folder called 'controllers'
