@@ -38,5 +38,19 @@ Store and retrieve messages stored in a plain JSON file
   `nest generate module messages`
 
 - Generate a new controller through cli
+
   - `nest generate controller messages/messages --flat`
   - type of class to generate; Place the file in the messages folder/Call the class 'messages'; Don't create an extra folder called 'controllers'
+
+- Pipe: Validate request data before it reaches a route handler (Controller)
+
+  - ValidationPipe: Pipe built in to Nest to make validation super easy
+    1. Use class-transformer to turn the body into an instance of the DTO class
+    2. Use class-validator to validate the instance
+    3. If there are errors, respond immediately, otherwise provide body to request handler
+
+- Setting up Automatic Validation
+  1. Tell Nest to use global validation
+  2. Create a class that describes the different properties that the request body should have. (Data Transfer Object: Carries data between two place)
+  3. Add validation rules to the class (check github repo of class-validation & class-transformer)
+  4. Apply that class to the request handler
