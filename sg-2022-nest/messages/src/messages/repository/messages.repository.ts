@@ -1,5 +1,7 @@
+import { Injectable } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises';
 
+@Injectable()
 export class MessagesRepository {
   // TODO: turn message to a private variable, and initialize in constructor
   // Tips: async cannot be worked in constructor, use a static builder instead

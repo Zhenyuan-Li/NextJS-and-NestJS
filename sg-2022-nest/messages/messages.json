@@ -1,7 +1,1 @@
-{
-  "1": { "content": "hello world 1", "id": "1" },
-  "2": { "content": "hello world 2", "id": "2" },
-  "3": { "content": "hello world 3", "id": "3" },
-  "4": { "content": "hello world 4", "id": "4" },
-  "838": { "id": 838, "content": "hello world manually" }
-}
+{"1":{"content":"hello world 1","id":"1"},"2":{"content":"hello world 2","id":"2"},"3":{"content":"hello world 3","id":"3"},"4":{"content":"hello world 4","id":"4"},"148":{"id":148,"content":"message after adding DIs"},"838":{"id":838,"content":"hello world manually"}}

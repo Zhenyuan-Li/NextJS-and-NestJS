@@ -1,73 +1,68 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# S2 Messages
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Store and retrieve messages stored in a plain JSON file
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Request
 
-## Description
+- Create a new message
+  - POST localhost:3000/messages
+  - {"content": "Hello World}
+- Retrieve a list of all messages
+  - GET localhost:3000/messages
+- Retrieve a message with a particular ID
+  - GET localhost:3000/messages/id
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Notes
 
-## Installation
+- To create a new module. p.s. It will add Module at the end of directory name automatically
 
-```bash
-$ npm install
-```
+  `nest generate module messages`
 
-## Running the app
+- Generate a new controller through cli
 
-```bash
-# development
-$ npm run start
+  - `nest generate controller messages/messages --flat`
+  - type of class to generate; Place the file in the messages folder/Call the class 'messages'; Don't create an extra folder called 'controllers'
 
-# watch mode
-$ npm run start:dev
+- Pipe: Validate request data before it reaches a route handler (Controller)
 
-# production mode
-$ npm run start:prod
-```
+  - ValidationPipe: Pipe built in to Nest to make validation super easy
+    1. Use class-transformer to turn the body into an instance of the DTO class
+    2. Use class-validator to validate the instance
+    3. If there are errors, respond immediately, otherwise provide body to request handler
 
-## Test
+- Setting up Automatic Validation
+  1. Tell Nest to use global validation
+  2. Create a class that describes the different properties that the request body should have. (Data Transfer Object: Carries data between two place)
+  3. Add validation rules to the class (check github repo of class-validation & class-transformer)
+  4. Apply that class to the request handler
 
-```bash
-# unit tests
-$ npm run test
+## Dependency Injection
 
-# e2e tests
-$ npm run test:e2e
+- Inversion of Control Principle
 
-# test coverage
-$ npm run test:cov
-```
+  - Classes should not create instances of its dependencies on its own
+  - Testing the apps will be far more easy...
+  - Downside:
 
-## Support
+  ```ts
+  const repo = new MessageRepo();
+  const service = new MessageService(repo);
+  const controller = new MessagesController(service);
+  // This tons of classes is
+  ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Nest DI Container/Injector
 
-## Stay in touch
+  - List of classes and their dependencies eg. MsgService -> MsgRepo
+  - List of instances that I have created eg. return controller (only one instance will be created if multiple call)
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Flow
+  1. At startup, register all classes with the container
+  2. Container will figure out what each dependency each class has
+  3. We the ask the container to create an instance of a class for us
+  4. Container creates all required dependencies and gives us the instance
+  5. Container will hold onto the create dependency instances and reuse them if needed
 
-## License
+1-2 Use the 'Injectable' decorator on each class and add them to modules list of providers
 
-Nest is [MIT licensed](LICENSE).
+3-4 Happens automatically - Nest will try to create controller instance for us
