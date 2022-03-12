@@ -1,8 +1,16 @@
-// import { NestFactory } from '@nestjs/core';
-// import { AppModule } from './app.module';
+import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 
-// async function bootstrap() {
-//   const app = await NestFactory.create(AppModule);
-//   await app.listen(3000);
-// }
-// bootstrap();
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      // make sure the incoming request body is valid (as defined in dto), and filter out invalid property
+      whitelist: true,
+    }),
+  );
+  await app.listen(3000);
+}
+bootstrap();

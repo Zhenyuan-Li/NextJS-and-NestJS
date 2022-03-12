@@ -33,3 +33,41 @@
 
 - PATCH /reports/:id
 - Body - {approved}
+
+### Extra (for practice purpose only):
+
+1. Find a user with given id
+   - GET /auth/:id
+2. Find all users with given email
+   - GET /auth?email=
+3. Update a user with given id
+   - PATCH /auth/:id; Body - {email, password}
+4. Delete user with given id
+   - DELETE /auth/:id
+
+## Persisting Data with TypeORM
+
+Nest works fine with ant ORM, but works well out of the box with TypeORM and Mongoose
+
+### Connection
+
+- AppModule -> Connection to SQLite DB
+- UsersModule/ ReportsModule
+  - User(Report) Entity: Lists the different properties that a User(Report) has (no functionality)
+  - Users(Reports) Repository: Methods to find, update, delete, create a User(Report)
+
+### Creating an Entity
+
+1. Create an entity file, and create a class in it that lists all the properties that your entity will have.
+2. Connect the entity to its parent module. This creates a repository
+3. Connect the entity to the root connection (in app module)
+
+### [Repository API](https://typeorm.io/#/repository-api)
+
+There are always more ways to achieve the purpose
+
+- create(): Makes a new instance of am entity, but does not persist it to the DB
+- save(): Adds or updates a record to the DB
+- find(): Runs a query and returns a list of entities
+- findOne(): Run a query, returning the first record matching the search criteria.
+- remove(): Remove a record from the DB
