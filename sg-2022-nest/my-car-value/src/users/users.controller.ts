@@ -14,9 +14,13 @@ import {
 
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user-dto';
+import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
-import { SerializeInterceptor } from '../interceptors/serialize.interceptor';
+import { Serialize } from '../interceptors/serialize.interceptor';
 
+// We put a global serializer, if Admin & Public routes exit, and need to
+// return different kind of responses. Just add it locally and different dto.
+@Serialize(UserDto)
 @Controller('auth')
 export class UsersController {
   // TODO: NotFoundError handling for all routes
@@ -27,7 +31,7 @@ export class UsersController {
     this.usersService.create(body.email, body.password);
   }
 
-  @UseInterceptors(SerializeInterceptor)
+  // @UseInterceptors(new SerializeInterceptor(UserDto))
   @Get('/:id')
   // Param return string
   async findUser(@Param('id') id: string) {
