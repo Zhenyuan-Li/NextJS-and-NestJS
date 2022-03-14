@@ -71,3 +71,19 @@ There are always more ways to achieve the purpose
 - find(): Runs a query and returns a list of entities
 - findOne(): Run a query, returning the first record matching the search criteria.
 - remove(): Remove a record from the DB
+
+## Creating and saving user data
+
+### Working flow
+
+1. Request {email: 'a#a.com', password: 'aaa'}
+2. Validation Pipe <- CreateUserDto (email: string, password: string)
+3. UsersControllers: Defines routes + picks interesting data from incoming request
+4. User Entity: Defines what a user is
+   1. UsersService: Contains our real app logic
+   2. UsersRepository: Created by TypeORM
+5. SQLite DB
+
+### Error Handling
+
+Nest has other three types of Controller (HTTP, WebSocket, GRPC). BUT WebSocket & GRPC don't know how to handler a NotFoundException
