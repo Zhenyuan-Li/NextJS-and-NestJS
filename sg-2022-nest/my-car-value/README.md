@@ -87,3 +87,46 @@ There are always more ways to achieve the purpose
 ### Error Handling
 
 Nest has other three types of Controller (HTTP, WebSocket, GRPC). BUT WebSocket & GRPC don't know how to handler a NotFoundException
+
+## Customize data serialization
+
+### Doc Recommended (flow is bidirectional)
+
+e.g. Exclude password in response data
+
+1. UserService - findOne()
+
+UserEntityInstance: Directions on how to turn this instance of a class into a plain object
+
+2. Users Controller - findUser()
+
+Class Serializer Interceptor: Turns an instance of User Entity into a plain object based on some rules
+
+3. Request GET /auth/2
+
+#### Problem
+
+We might turns out to have two routes: Admin and Public.
+
+- Admin: {id, email, age, name} - Controller: findUserForAdmin()
+- Public: {id, email} - Controller: findUser()
+
+#### Solution
+
+In step 2, we create a Custom Interceptor.
+
+User DTO: that describes how to serialize a user for this particular handler.
+One DTO for admin, One DTO for public
+
+### Customize Interceptor
+
+- Interceptors can mess around with incoming requests and/or outgoing responses.
+- Interceptors can be applied to a single handler, all the handlers in a controller or globally
+
+```ts
+intercept(context: ExecutionContext, next: CallHandler)
+```
+
+- 'intercept' method is called automatically
+- first param: Information on the incoming request
+- second param: Kind of a reference to the request handler in our controller
