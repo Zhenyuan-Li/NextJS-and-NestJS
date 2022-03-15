@@ -16,6 +16,7 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user-dto';
 import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
+import { AuthService } from './auth.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
 
 // We put a global serializer, if Admin & Public routes exit, and need to
@@ -24,11 +25,19 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 @Controller('auth')
 export class UsersController {
   // TODO: NotFoundError handling for all routes
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
-    this.usersService.create(body.email, body.password);
+    return this.authService.signup(body.email, body.password);
+  }
+
+  @Post('/signin')
+  signin(@Body() body: CreateUserDto) {
+    return this.authService.signin(body.email, body.password);
   }
 
   // @UseInterceptors(new SerializeInterceptor(UserDto))

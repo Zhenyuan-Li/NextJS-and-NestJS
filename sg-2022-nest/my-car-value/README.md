@@ -130,3 +130,12 @@ intercept(context: ExecutionContext, next: CallHandler)
 - 'intercept' method is called automatically
 - first param: Information on the incoming request
 - second param: Kind of a reference to the request handler in our controller
+
+## Authentication
+
+- Optional # 1 - Add more functionality to the Users Service
+- Optional # 2 - Create a new AuthService that relies on UserService
+
+Why Option # 2?
+
+What if we need to add more user related service? Like add preference, reset feature... The content of UserService will become messy.
