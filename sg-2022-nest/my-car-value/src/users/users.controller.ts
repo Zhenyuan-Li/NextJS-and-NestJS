@@ -9,21 +9,29 @@ import {
   Query,
   Session,
   NotFoundException,
-  UseInterceptors,
+  UseGuards,
+  // UseInterceptors,
   // ClassSerializerInterceptor,
 } from '@nestjs/common';
 
+import { User } from './user.entity';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user-dto';
 import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
+// import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 
 // We put a global serializer, if Admin & Public routes exit, and need to
 // return different kind of responses. Just add it locally and different dto.
 @Serialize(UserDto)
 @Controller('auth')
+// // Downside of this approach: if multiple controllers (which needs this ) exits,
+// // we have to add this interceptor to everywhere. This approach is comprehensive, but not smart. Make it globally
+// @UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   // TODO: NotFoundError handling for all routes
   constructor(
@@ -46,9 +54,14 @@ export class UsersController {
   }
 
   @Get('/whoami')
-  whoAmI(@Session() session: any) {
-    return this.usersService.findOne(session.userId);
+  @UseGuards(AuthGuard)
+  whoAmI(@CurrentUser() user: User) {
+    return user;
   }
+  // Another approach without customized decorator. A little bit tedious
+  // whoAmI(@Request() user: Request) {
+  //   return request.currentUser;
+  // }
 
   @Post('/signout')
   signOut(@Session() session: any) {
