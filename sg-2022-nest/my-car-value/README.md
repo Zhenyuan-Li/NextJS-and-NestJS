@@ -139,3 +139,24 @@ intercept(context: ExecutionContext, next: CallHandler)
 Why Option # 2?
 
 What if we need to add more user related service? Like add preference, reset feature... The content of UserService will become messy.
+
+### How auto signIn works (cookie-session library)
+
+GET /asdf
+
+Headers - Cookie: ey4ji145152
+
+Server:
+
+1. Cookie-Session library looks at the 'Cookie' header
+2. Cookie-Session decodes the string, result in an object
+   - Session - {userId: 'asd'}
+3. We get access to session object in a request handler using a decorator
+4. We add/remove/change properties on the session object
+   - Session - {userId: 'zxc'}
+5. Cookie-Session sees the updated session and turns it into an encrypted string
+6. String sent back in the 'Set-Cookie' header on the response object
+
+Response
+
+Headers - Set-Cookie: ey6ak025k66
