@@ -169,3 +169,9 @@ What if we need to add more user related service? Like add preference, reset fea
 3. Response
 
    Headers - Set-Cookie: ey6ak025k66
+
+## Unit testing
+
+DI container When testing (weird faking user service)
+
+Auth Service -> Class that implements all the methods of Users Service
