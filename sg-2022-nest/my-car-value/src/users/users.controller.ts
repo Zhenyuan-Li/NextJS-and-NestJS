@@ -22,7 +22,7 @@ import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 // import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 
 // We put a global serializer, if Admin & Public routes exit, and need to
