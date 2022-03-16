@@ -175,3 +175,21 @@ What if we need to add more user related service? Like add preference, reset fea
 DI container When testing (weird faking user service)
 
 Auth Service -> Class that implements all the methods of Users Service
+
+## end-to-end Test
+
+### Test Runner
+
+#### it ('handles a request to signup')
+
+1. Create new copy of the entire nest app
+2. Listen on traffic to a randomly assigned port
+3. Receive requests form the test
+
+### Wire up Validation Pipe and cookie-session into App module
+
+### Create Dev & Prod Database
+
+Nest's recommended way of handling environment config is incredibly over-the-top complicated.
+
+Create a ConfigService, and in DI container, Change the TypeOrmModule to depend on it.
