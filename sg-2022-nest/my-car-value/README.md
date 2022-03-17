@@ -193,3 +193,7 @@ Auth Service -> Class that implements all the methods of Users Service
 Nest's recommended way of handling environment config is incredibly over-the-top complicated.
 
 Create a ConfigService, and in DI container, Change the TypeOrmModule to depend on it.
+
+## Managing App Configuration
+
+### managing doc env
