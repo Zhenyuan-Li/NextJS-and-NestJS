@@ -16,7 +16,7 @@ import {
 
 import { User } from './user.entity';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDTO } from './dtos/update-user-dto';
+import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';

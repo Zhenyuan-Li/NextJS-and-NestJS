@@ -194,6 +194,22 @@ Nest's recommended way of handling environment config is incredibly over-the-top
 
 Create a ConfigService, and in DI container, Change the TypeOrmModule to depend on it.
 
-## Managing App Configuration
+## Relation with TypeORM (Foreign key)
 
-### managing doc env
+### Associations with Nests & TypeORM
+
+1. Figure out what kind of association we are modeling
+   - One to many: A user has many reports
+     - @OneToMany(): Does not change the Users table;
+     - reports:Report[]
+       - Report tied to this user will be accessed with: user.reports
+       - Association is not automatically fetched when we fetch a User
+   - Many to one: A report has one user.
+     - @ManyToOne(): Change the Reports table
+     - user: User
+       - User who created this report will be accessed with report.user
+       - Association is not automatically fetched when we fetch a Report
+2. Add the appropriate decorators to our related entities. (see above usage)
+
+3. Associate the records when one is created.
+4. Apply a serializer to limit info shared.

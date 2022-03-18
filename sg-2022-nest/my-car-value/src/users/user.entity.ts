@@ -6,7 +6,10 @@ import {
   AfterInsert,
   AfterRemove,
   AfterUpdate,
+  OneToMany,
 } from 'typeorm';
+
+import { Report } from '../reports/reports.entity';
 
 @Entity()
 export class User {
@@ -19,6 +22,12 @@ export class User {
   @Column()
   // @Exclude()
   password: string;
+
+  // 1) User is going to associated with something of type Report
+  // why receive function: to solve circular dependencies issue
+  // 2) From the target entity instance back to the entity that we're currently defining
+  @OneToMany(() => Report, (report) => report.user)
+  reports: Report[];
 
   // Hook decorators
   @AfterInsert()
