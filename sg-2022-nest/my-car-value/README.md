@@ -213,3 +213,8 @@ Create a ConfigService, and in DI container, Change the TypeOrmModule to depend 
 
 3. Associate the records when one is created.
 4. Apply a serializer to limit info shared.
+
+# Permission System (Auth & Public)
+
+- Authentication: Figure out who is making a request.
+- Authorization: Figure out if the person making the request is allowed to make it.

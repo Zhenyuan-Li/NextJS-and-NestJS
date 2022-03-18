@@ -1,7 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
 
-import { User } from '../../users/user.entity';
-
 export class ReportDto {
   @Expose()
   id: number;
@@ -26,6 +24,9 @@ export class ReportDto {
 
   @Expose()
   model: string;
+
+  @Expose()
+  approved: boolean;
 
   @Transform(({ obj }) => obj.user.id)
   @Expose()

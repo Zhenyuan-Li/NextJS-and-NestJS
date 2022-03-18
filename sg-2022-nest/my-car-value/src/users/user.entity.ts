@@ -23,6 +23,9 @@ export class User {
   // @Exclude()
   password: string;
 
+  @Column({ default: true })
+  admin: boolean;
+
   // 1) User is going to associated with something of type Report
   // why receive function: to solve circular dependencies issue
   // 2) From the target entity instance back to the entity that we're currently defining
