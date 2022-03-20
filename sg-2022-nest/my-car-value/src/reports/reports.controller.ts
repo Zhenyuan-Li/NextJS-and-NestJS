@@ -5,11 +5,14 @@ import {
   UseGuards,
   Patch,
   Param,
+  Get,
+  Query,
 } from '@nestjs/common';
 
 import { ReportDto } from './dtos/report.dto';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { ApproveReportDto } from './dtos/approve-report.dto';
+import { GetEstimateDto } from './dtos/get-estimate.dto';
 import { ReportsService } from './reports.service';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from '../guards/auth.guard';
@@ -32,5 +35,11 @@ export class ReportsController {
   @Patch('/:id')
   approveReport(@Param() id: string, @Body() body: ApproveReportDto) {
     return this.reportService.changeApproval(id, body.approved);
+  }
+
+  @Get()
+  getEstimate(@Query() query: GetEstimateDto) {
+    // problem: some property need to convert to number, since queryString return string
+    console.log(query);
   }
 }
