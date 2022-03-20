@@ -214,10 +214,16 @@ Create a ConfigService, and in DI container, Change the TypeOrmModule to depend 
 3. Associate the records when one is created.
 4. Apply a serializer to limit info shared.
 
-# Permission System (Auth & Public)
+## Permission System (Auth & Public)
 
 - Authentication: Figure out who is making a request.
 - Authorization: Figure out if the person making the request is allowed to make it.
 - About the incorrect auth mode:
   - Execution order: Request -> Middlewares -> Guard -> Request Handler -> Response. Interceptor could be between Guards and Request Handler, or Request Handler and Response.
   - We make the CurrentUser Interceptor into Middleware. Which will makes it runs right after the cook-session middleware
+
+## QueryBuilders with TypeORM
+
+### User one more on TypeORM Repository
+
+- createQueryBuilder: Returns a query builder that can bed used for complex queries

@@ -40,6 +40,6 @@ export class ReportsController {
   @Get()
   getEstimate(@Query() query: GetEstimateDto) {
     // problem: some property need to convert to number, since queryString return string
-    console.log(query);
+    return this.reportService.createEstimate(query);
   }
 }
